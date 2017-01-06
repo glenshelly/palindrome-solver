@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<project name="glen" default="full" basedir=".">
+
+    <property name="java.dir" value="src/java"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir" value="${build.dir}/jar"/>
+
+    <target name="clean" depends="mkdirs">
+        <delete dir="${build.dir}" failonerror="false"/>
+    </target>
+
+
+    <target name="compile" depends="mkdirs">
+        <javac
+                encoding="iso-8859-1"
+                destdir="${classes.dir}"
+                deprecation="off"
+                debug="true"
+                includeantruntime="false" optimize="true"
+
+                >
+            <src path="${java.dir}"/>
+            <!-- <classpath refid="build.classpath"/> -->
+        </javac>
+    </target>
+
+
+    <target name="mkdirs">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/games.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.glen.DwarfishWordplay"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="build/jar/games.jar" fork="true"/>
+    </target>
+
+    <target name="full" depends="compile, jar, run">
+    </target>
+
+</project>
